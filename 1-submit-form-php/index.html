@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activit Form Submit</title>
+</head>
+<body>
+    <h1>Form submit</h1>
+    <form action="submit.php" method="post">
+        <div class="name">
+            <label for="first_name">First name</label>
+            <input type="text" name="fname" id="first_name" placeholder="Enter First Name" required>
+            <label for="middle_name">Middle name</label>
+            <input type="text" name="mname" id="middle_name" placeholder="Enter First Name" required>
+            <label for="last_name">Last name</label>
+            <input type="text" name="lname" id="last_name" placeholder="Enter First Name" required>
+        </div>
+        <div class="gender">
+            <input type="radio" name="gender" id="male" value="Mr." required>
+            <label for="male">Male</label>
+            <input type="radio" name="gender" id="female" value="Mrs." required>
+            <label for="female">Female</label>
+        </div>
+        <div class="bdate">
+            <label for="bday">Birthday</label>
+            <input type="date" name="dob" id="bday" required>
+        </div>
+        <input type="submit" value="Submit" name="submit">
+    </form>
+</body>
+</html>
