@@ -29,7 +29,7 @@ AFTER YOU CREATE A DATABASE, CLIKCED THE DATABASE YOU JUST CREATED AND IMPORT TH
 ![5](https://user-images.githubusercontent.com/79005601/201004073-3ea874a9-dd71-44a3-807e-2879ddaf7839.PNG)
 
 STEP 6. 
-JUST PASTE THIS URL TO YOUR WEB BROWSER.
+JUST PASTE THIS URL TO YOUR WEB BROWSER. http://localhost/phpActivity/2-crud-student-info-php/
 
 ![6](https://user-images.githubusercontent.com/79005601/201004371-8da3b864-3c6b-4a68-a02f-1503c6c65390.PNG)
 
