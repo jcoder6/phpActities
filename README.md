@@ -36,3 +36,17 @@ JUST PASTE THIS URL TO YOUR WEB BROWSER.
 
 HOPE YOU FOLLOW IT HAHAHAHA GOODLUCK!
 
+
+ABOUT THE APP
+
+CREATE FUNCTIONALITY
+![image](https://user-images.githubusercontent.com/79005601/201005287-00d6e68b-3def-4f0b-a697-fa8ea0cab323.png)
+
+READ FUNCTIONALITY
+![image](https://user-images.githubusercontent.com/79005601/201005395-dcf5d8e2-b7c3-4bd2-b447-ea8594ff63c1.png)
+
+UPDATE FUNCTIONALITY
+![image](https://user-images.githubusercontent.com/79005601/201005446-e38bb5f4-34da-4b28-98c9-25264b140cc0.png)
+
+DELETE FUNCTIONALITY
+![image](https://user-images.githubusercontent.com/79005601/201005478-e18b30ea-d391-4221-9831-7f306906c082.png)
