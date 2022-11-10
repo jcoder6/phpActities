@@ -1,7 +1,7 @@
 <?php $currStudent = fetchCurrentStudent($pdo, $_GET['view-student']) ?>
 
 <div class="overlay"></div>
-<div class="add-new-student-modal">
+<div class="add-new-student-modal modal-active">
     <div class="close-btn close-btn-view"><i class="fa-solid fa-xmark"></i></div>
     <h3>View Student</h3>
     <form action="" method="POST">

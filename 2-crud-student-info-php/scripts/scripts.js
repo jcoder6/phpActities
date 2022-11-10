@@ -1,3 +1,7 @@
+/* ======================================
+      FOR ADDING AND VIEWING MODAL
+========================================*/
+
 const addModal = document.querySelector('.add-new-student-modal');
 const overlay = document.querySelector('.overlay');
 const addBtn = document.querySelector('.add-student-btn');
@@ -5,29 +9,43 @@ const closeBtn = document.querySelector('.close-btn');
 const closeBtnView = document.querySelector('.close-btn-view');
 
 
-addBtn.addEventListener('click', () => {
-    addModal.classList.toggle('display-none');
-    overlay.classList.toggle('display-none');
-})
+try {
+  window.addEventListener('DOMContentLoaded', () => {
+    addBtn.addEventListener('click', () => {
+      addModal.classList.toggle('display-none');
+      addModal.classList.toggle('modal-active');
+      overlay.classList.toggle('display-none');
+      overlay.classList.toggle('fade-in');
+    })
+    
+    closeBtn.addEventListener('click', () => {
+      addModal.classList.remove('modal-active');
+        addModal.classList.add('display-none');
+        overlay.classList.add('display-none');
+    })
+  })
+} catch (e) {
+  console.log('Something went wrong')
+}
 
-closeBtn.addEventListener('click', () => {
-    addModal.classList.add('display-none');
-    overlay.classList.add('display-none');
-})
-
-closeBtnView.addEventListener('click', () => {
+try {
+  closeBtnView.addEventListener('click', () => {
     location.href="http://localhost/phpActivity/2-crud-student-info-php/";
-})
+  })
+} catch (error) {
+  console.log('nothing in here');
+}
 
 /* ======================================
         FOR MESSAGING MODAL
 ========================================*/
 
 const msg = document.querySelector('.message');
+// console.log(msg);
 try {
   let msgType = msg.dataset.messagetype;
   window.addEventListener('DOMContentLoaded', () => {
-    console.log(msg);
+    // console.log(msg);
     if(msgType == 'success'){
       msg.style.color = '#3d3d3d';
       msg.style.backgroundColor = '#96FE8A';
@@ -45,6 +63,6 @@ try {
   })
   
 } catch (e) {
-  console.log(e);
+  console.log('Nothing in here');
 }
 
