@@ -41,3 +41,24 @@
             echo 'error';
         }
     }
+
+    if(isset($_POST['send-msg'])){
+        if(!empty($_POST['msg'])){
+            $name = $_POST['name'];
+            $convoID = sanitize($_POST['convo']);
+            $msgData = array(
+                'convo_id' => $convoID,
+                'sender_id' => $_SESSION['user-login'],
+                'message' => sanitize($_POST['msg'])
+            );
+
+            $query = "INSERT INTO messages(convo_id, sender_id, message) VALUES (:convo_id, :sender_id, :message)";
+            $stmt = $pdo->prepare($query);
+
+            if($stmt->execute($msgData)){
+                header('location:' . ROOT_URL . 'index.php?convo=' . $convoID . '&name=' . $name);
+            } else {
+                echo 'error';
+            }
+        }
+    }

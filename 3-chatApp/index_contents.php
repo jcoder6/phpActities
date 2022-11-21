@@ -26,6 +26,7 @@ function getUserConvos($pdo, $userID){
             array_push(
                $userConvoWith, 
                [
+                  'convoID' => $r->id,
                   'recieverID' => $r->recieverID, 
                   'recieverFullName' => ucwords($r->fname) . ' ' . ucwords($r->lname)
                ]
@@ -46,5 +47,44 @@ function userFullName($pdo, $userID) {
    if($stmt->execute()){
       return $stmt->fetch(PDO::FETCH_OBJ);
 
+   }
+}
+
+function getConvo($pdo, $convoID) {
+   $query = "SELECT 
+         *  
+      FROM 
+         messages
+      WHERE 
+         convo_id = :convoID 
+      ORDER BY
+         created_at
+      DESC
+      LIMIT 16";
+   $stmt = $pdo->prepare($query);
+
+   if($stmt->execute(['convoID' => $convoID])){
+      return $stmt->fetchAll(PDO::FETCH_OBJ);
+   } else {
+      echo 'error';
+      die;
+   }
+}
+
+function displayConvo($conversations) {   
+   foreach($conversations as $conversation) {
+       if($conversation->sender_id == $_SESSION['user-login']){
+           echo '<div class="sent flex flex-row justify-end mt-3 mb-5 ">
+                   <span class=" rounded-2xl text-stone-50 bg-blue-500 p-3 max-w-md">'.
+                       $conversation->message
+                   .'</span>
+               </div>';
+       } else {
+           echo '<div class="recv flex flex-row justify-start mt-3 mb-5">
+                   <span class="border border-stone-200 rounded-2xl bg-stone-200 p-3 max-w-md">'.
+                       $conversation->message
+                   .'</span>
+               </div>';
+       }
    }
 }
