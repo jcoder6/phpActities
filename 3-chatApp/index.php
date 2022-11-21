@@ -24,9 +24,9 @@ include('./index_contents.php');
             </div>
             <div class="flex flex-col flex-auto overflow-y-auto">
                 <p class="px-3 py-2 font-bold text-white bg-gradient-to-r from-rose-400 via-purple-500 to-blue-500 sticky top-0 z-10 text-lg">Chat with</p>
-                <?php $convos = getUserConvos($pdo, $_SESSION['user-login']); ?>
+                <?php $convos = getUserConvos($pdo, $_SESSION['user-login']) ?>
                 <?php foreach($convos as $convo): ?>
-                <a href="<?= ROOT_URL ?>index.php?convo=<?= $convo['recieverID'] ?>" class="flex flex-row justify-between items-center relative px-3 py-2 hover:bg-blue-600 hover:text-white transition-all border-b border-stone-300">
+                <a href="<?= ROOT_URL ?>index.php?convo=<?= $convo['convoID'] ?>&name=<?= $convo['recieverFullName'] ?>" class="flex flex-row justify-between items-center relative px-3 py-2 hover:bg-blue-600 hover:text-white transition-all border-b border-stone-300">
                     <span><?= $convo['recieverFullName'] ?></span>
                 </a>
                 <?php endforeach; ?>
@@ -52,45 +52,49 @@ include('./index_contents.php');
         </aside>
         
         <div class="flex-auto flex flex-col px-2 bg-stone-200/50">
+        <?php 
+            if(isset($_GET['convo']) && isset($_GET['name'])){
+                $convoID = $_GET['convo'];
+                $arrayFnameReciever = explode(' ', $_GET['name']);
+                $receiverInitial = ucfirst($arrayFnameReciever[0][0]).ucfirst($arrayFnameReciever[1][0]);
+                $receiverFullName = ucfirst($arrayFnameReciever[0]) . ' ' . ucfirst($arrayFnameReciever[1]);
+                $conversations = getConvo($pdo, $convoID);
+            } else {
+                $receiverInitial = '<3';
+                $receiverFullName = 'Welcome to Chat App!';
+            }
+        ?>
             <div class="flex flex-row px-4 py-3 items-center gap-2">
                 <div class="w-8 h-8 flex flex-col rounded-full items-center justify-center bg-blue-500 text-white">
-                    <h1 class="font-black">TS</h1>
+                    <h1 class="font-black"><?= $receiverInitial ?></h1>
                 </div>
-                <h5 class="text-sm font-semibold ">Tony Stark</h5>
+                <h5 class="text-sm font-semibold "><?= $receiverFullName ?></h5>
             </div>
             <div class="flex flex-col-reverse flex-auto  bg-stone-50 rounded-2xl p-5 overflow-y-auto shadow-xl">
-                
-                    <div class="recv flex flex-row justify-start mt-3 mb-5">
-                        <span class="border border-stone-200 rounded-2xl bg-stone-200 p-3 max-w-md">
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                        </span>
-                    </div>
-
-                    <div class="sent flex flex-row justify-end mt-3 mb-5 ">
-                        <span class=" rounded-2xl text-stone-50 bg-blue-500 p-3 max-w-md">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        </span>
-                    </div>
-
-                    <div class="recv flex flex-row justify-start mt-3 mb-5">
-                        <span class="border border-stone-200 rounded-2xl bg-stone-200 p-3 max-w-md">
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                        </span>
-                    </div>
+                <?php 
+                    if(isset($_GET['convo']) && isset($_GET['name'])) {
+                        displayConvo($conversations);
+                    } else {
+                        echo '<div class="no-convo">Choose who you want to convo with... </div>';
+                    }
+                ?>
             </div>
+            <?php  if(isset($_GET['convo']) && isset($_GET['name'])) : ?>
             <div class="py-4">
-                    <form action="">
-                        <div class="flex flex-row gap-3">
-                            <textarea name="msg" id="msg" class="w-full rounded-2xl resize-none p-2 focus:ring-none focus:outline-none"></textarea>
-                            <button type="submit" class="px-3 py-2 bg-blue-700 rounded-md hover:bg-blue-800 text-stone-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                                </svg>
-                            </button>
-                        </div>
-                    </form>
-                
+                <form action="run.php" method="POST">
+                    <div class="flex flex-row gap-3">
+                        <input type="hidden" name="convo" value="<?= $convoID ?>" required>
+                        <input type="hidden" name="name" value="<?= $receiverFullName ?>" required/>
+                        <textarea name="msg" id="msg" class="w-full rounded-2xl resize-none p-2 focus:ring-none focus:outline-none" required></textarea>
+                        <button type="submit" name="send-msg" class="px-3 py-2 bg-blue-700 rounded-md hover:bg-blue-800 text-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>  
             </div>
+            <?php endif; ?> 
         </div>
         
         <!-- <div class="w-[300px]">
