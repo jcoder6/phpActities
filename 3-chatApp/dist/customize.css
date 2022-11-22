@@ -1,0 +1,110 @@
+.search-container {
+   position: absolute;
+   display: flex;
+   align-items: center;
+   top: 12px;
+   right: 32px;
+   width: 500px;
+}
+
+.search-input {
+   padding: 3px;
+   border-radius: 5px;
+   width: 60%;
+   margin-left: 3px;
+}
+
+.search-btn {
+   border: 1px solid rgb(59 130 246 / var(--tw-bg-opacity));
+   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+   border-radius: 5px;
+   padding: 2px 10px;
+   color: white;
+   margin-left: auto;
+}
+
+.overlay {
+   position: absolute;
+   inset: 0;
+   background-color: rgba(0, 0, 0, .5);
+   z-index: 3;
+}
+
+.search-result-container {
+   position: absolute;
+   width: 50vw;
+   height: 50vh;
+   background-color: white;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   z-index: 5;
+   border-radius: 15px;
+   border: 3px solid rgb(59 130 246 / var(--tw-bg-opacity));
+   overflow: hidden;
+   overflow-y: scroll;
+}
+
+.search-result-container::-webkit-scrollbar{
+   display: none;
+}
+
+.result-header {
+   width: 100%;
+   font-size: 20px;
+   padding: 12px 30px;
+   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+   color: white;
+   margin-bottom: 2rem;
+}
+
+.result-container {
+   display: flex;
+   padding: 0 1rem;
+   justify-content: space-between;
+   flex-wrap: wrap;  
+}
+
+.res {
+   border-bottom: 1px solid gray;
+   width: 49%;
+   margin-bottom: 1%;
+   transition: background-color 250ms ease-in-out;
+}
+
+.res:hover {
+   background-color: rgb(175, 175, 175);
+}
+
+.close {
+   top: 1rem;
+   right: 1rem;
+   position: absolute;
+   z-index: 4;
+   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+   padding: .5rem;
+   height: 2.5rem;
+   width: 2.5rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   border-radius: 10px; 
+   cursor: pointer;
+}
+
+.close span {
+   width: 80%;
+   height: 3px;
+   background-color: white;
+   position: absolute;
+   border-radius: 100px;
+}
+
+.close span:first-child {
+   transform: rotate(-45deg);
+}
+
+.close span:last-child{
+   transform: rotate(45deg);
+}
