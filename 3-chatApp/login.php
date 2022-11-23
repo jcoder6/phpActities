@@ -8,7 +8,12 @@
     <title>Log in</title>
     <link rel="stylesheet" href="./dist/output.css">
 </head>
-
+<?php  
+    include('./config/db_connect.php');
+    if(isset($_SESSION['user-login'])){
+        header('location: ' . ROOT_URL);
+    }
+?>
 <body class="bg-stone-50">
     <div class="flex flex-col justify-center items-center h-screen ">
         <div class="w-1/5 bg-white rounded-lg shadow-xl p-5">

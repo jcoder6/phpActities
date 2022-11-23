@@ -18,7 +18,7 @@
         if($stmt->execute($inputData)){
             echo '<script>location.href="'. ROOT_URL .'login.php";</script>';
         } else {
-            echo 'error';  
+            header('location:' . ROOT_URL . 'register.php');
             die();
         }
     }
@@ -38,7 +38,8 @@
             $_SESSION['user-login'] = $res->id;
             header('location:' . ROOT_URL);
         } else {
-            echo 'error';
+            echo 'Incorrect Username or Password';
+            header('location:' . ROOT_URL);
         }
     }
 
@@ -46,19 +47,12 @@
         if(!empty($_POST['msg'])){
             $name = $_POST['name'];
             $convoID = sanitize($_POST['convo']);
-            $msgData = array(
-                'convo_id' => $convoID,
-                'sender_id' => $_SESSION['user-login'],
-                'message' => sanitize($_POST['msg'])
-            );
-
-            $query = "INSERT INTO messages(convo_id, sender_id, message) VALUES (:convo_id, :sender_id, :message)";
-            $stmt = $pdo->prepare($query);
-
-            if($stmt->execute($msgData)){
-                header('location:' . ROOT_URL . 'index.php?convo=' . $convoID . '&name=' . $name);
-            } else {
-                echo 'error';
-            }
         }
+    }
+
+    if(isset($_POST['new-msg'])){
+        $receiverID = sanitize($_POST['receiver-id']);
+        $msg = sanitize($_POST['send-new-msg']);
+
+        echo $receiverID . $msg;
     }
