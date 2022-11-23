@@ -16,10 +16,11 @@
         $stmt = $pdo->prepare($query);
 
         if($stmt->execute($inputData)){
+            messageNotif('success', 'Account Created');
             echo '<script>location.href="'. ROOT_URL .'login.php";</script>';
         } else {
+            messageNotif('error', 'Something went wrong');
             header('location:' . ROOT_URL . 'register.php');
-            die();
         }
     }
 
@@ -36,9 +37,10 @@
         if($stmt->execute($loginInput) && $stmt->rowCount() == 1){
             $res = $stmt->fetch(PDO::FETCH_OBJ);
             $_SESSION['user-login'] = $res->id;
+            messageNotif('success', 'User Logged');
             header('location:' . ROOT_URL);
         } else {
-            echo 'Incorrect Username or Password';
+            messageNotif('error', 'Incorrect Username or Password');
             header('location:' . ROOT_URL);
         }
     }
@@ -47,12 +49,22 @@
         if(!empty($_POST['msg'])){
             $name = $_POST['name'];
             $convoID = sanitize($_POST['convo']);
+            $userID = $_SESSION['user-login'];
+            $msg = sanitize($_POST['msg']);
+
+            $msgData = array(
+                'convo_id' => $convoID,
+                'sender_id' => $userID,
+                'message' => $msg
+            );
+       
+            $query = "INSERT INTO messages(convo_id, sender_id, message) VALUES (:convo_id, :sender_id, :message)";
+            $stmt = $pdo->prepare($query);
+       
+            if($stmt->execute($msgData)){
+                header('location:' . ROOT_URL . 'index.php?convo=' . $convoID . '&name=' . $name);
+            } else {
+                echo 'error';
+            }
         }
-    }
-
-    if(isset($_POST['new-msg'])){
-        $receiverID = sanitize($_POST['receiver-id']);
-        $msg = sanitize($_POST['send-new-msg']);
-
-        echo $receiverID . $msg;
     }

@@ -15,8 +15,9 @@ include('./index_contents.php');
 include('./inc/functions.php')
 ?>
 <body class="bg-stone-200 h-screen font-mono">
+<?php showMessage() ?>
     <div class="flex flex-row h-screen gap-2">
-    
+
         <?php 
             include('./index-aside.php');
         ?>
@@ -30,5 +31,7 @@ include('./inc/functions.php')
         <?php
             include('./send-msg.php');
         ?>
+
+<script src="./dist/script.js"></script>
 </body>
 </html>

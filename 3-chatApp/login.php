@@ -10,11 +10,13 @@
 </head>
 <?php  
     include('./config/db_connect.php');
+    include('./inc/functions.php'); 
     if(isset($_SESSION['user-login'])){
         header('location: ' . ROOT_URL);
     }
 ?>
 <body class="bg-stone-50">
+<?php showMessage() ?>
     <div class="flex flex-col justify-center items-center h-screen ">
         <div class="w-1/5 bg-white rounded-lg shadow-xl p-5">
             <div class="px-3 py-4 mb-4">
@@ -31,7 +33,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="pw">Password</label>
-                    <input type="text"
+                    <input type="password"
                         class="px-2 py-1 rounded-md border border-stone-400 outline-none focus:ring-2 focus:ring-blue-600 w-full"
                         name="pw" id="pw" required>
                 </div>
@@ -43,6 +45,7 @@
         </div>
     </div>
 
+<script src="./dist/script.js"></script>
 </body>
 
 </html>
