@@ -28,7 +28,8 @@ function getUserConvos($pdo, $userID){
                [
                   'convoID' => $r->id,
                   'recieverID' => $r->recieverID, 
-                  'recieverFullName' => ucwords($r->fname) . ' ' . ucwords($r->lname)
+                  'recieverFullName' => ucwords($r->fname) . ' ' . ucwords($r->lname), 
+                  'link' => ROOT_URL . '?index.php?convo=' . $r->id . '&name=' . ucwords($r->fname) . ' ' . ucwords($r->lname)
                ]
             );
          }
@@ -38,6 +39,31 @@ function getUserConvos($pdo, $userID){
    }
 
    return $userConvoWith;
+}
+
+function getAllConvo($pdo, $userID) {
+
+   $userConvoWith = array();
+
+   $query = "SELECT * FROM users WHERE id != :userID";
+   $stmt = $pdo->prepare($query);
+
+   if($stmt->execute(['userID' => $userID])){
+      $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+      foreach($res as $r){
+         array_push(
+            $userConvoWith, 
+            [
+               'recieverID' => $r->id, 
+               'recieverFullName' => ucwords($r->fname) . ' ' . ucwords($r->lname), 
+            ]
+         );
+      }
+
+      return $userConvoWith;
+   } 
+
+   die();
 }
 
 function userFullName($pdo, $userID) {
